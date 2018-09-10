@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/layout.css">
+        <title>Inicio</title>
+    </head>
+    <body>
+        <h1 class="text-center">Chat</h1>
+        <br>
+        <div class="container-fluid">
+            <div id="viewMsg" class="text-center"></div>
+            <form id="formMsg">
+                <div class="row fixed-bottom ml-1 mr-1 mb-5">
+                    <div class="col-10">
+                        <input type="text" placeholder="Mensaje" id="contentMsg" class="form-control align-bottom">
+                    </div>
+                    <div class="col">
+                            <button type="submit" class="btn btn-dark btn-block">Enviar</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        <script src="js/jQuery.js"></script>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
