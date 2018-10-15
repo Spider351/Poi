@@ -24,6 +24,11 @@ $(function(){
         Render(context, canvas, socket);
     }, 60);
 
+    socket.on("user1e", function(image){
+        var img = document.getElementById("transObj");
+        img.src = image;
+    });
+
     /*msgForm.submit(function(e){
         e.preventDefault();
         socket.emit("enviar mensaje", msgContent.val());
@@ -46,5 +51,5 @@ function Fail(){
 
 function Render(con, canvas, socket){
     con.drawImage(videoe, 0, 0, con.width, con.height);
-    socket.emit("user 1", canvas.toDataURL("image/webp"));
+    socket.emit("user2", canvas.toDataURL("image/webp"));
 }

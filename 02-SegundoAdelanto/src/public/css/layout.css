@@ -1,8 +1,11 @@
 video{
     width: 400px;
     height: 320px;
+    display: none;
 }
-
 canvas{
-    display : none;
+    display: none;
+}
+p{
+    display: none;
 }
