@@ -9,20 +9,46 @@
     <body>
         <h1 class="text-center">Chat</h1>
         <br>
-        <div class="container-fluid">
-            <div id="viewMsg" class="text-center"></div>
-            <form id="formMsg">
-                <div class="row fixed-bottom ml-1 mr-1 mb-5">
-                    <div class="col-10">
-                        <input type="text" placeholder="Mensaje" id="contentMsg" class="form-control align-bottom">
-                    </div>
-                    <div class="col">
-                            <button type="submit" class="btn btn-dark btn-block">Enviar</button>
-                    </div>
+
+        <div class="container">
+            <div class="card col-4 mx-auto" id="nickWrap">
+                <div class="card-body">
+                    <form id="nickForm">
+                        <h3>Usuario:</h3>
+                        <p id="nickError"></p>
+                        <input type="text" id="nick" class="form-control">
+                        <input type="submit" class="btn mt-3">
+                    </form>
                 </div>
-            </form>
             </div>
         </div>
+
+        <div class="container-fluid" id="contentWrap">
+            <div class="row">
+
+                <div id="viewMsg" class="card ml-5 col-md-6">
+                    <form id="formMsg">
+                        <div class="row fixed-bottom ml-1 mr-1 mb-5">
+                            <div class="col-10">
+                                <input type="text" placeholder="Mensaje" id="contentMsg" class="form-control align-bottom">
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-dark btn-block">Enviar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card col-md-3">
+                    <h3>Usuarios:</h3>
+                    <div id="users">
+                                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <script src="js/jQuery.js"></script>
         <script src="socket.io/socket.io.js"></script>
         <script src="js/main.js"></script>

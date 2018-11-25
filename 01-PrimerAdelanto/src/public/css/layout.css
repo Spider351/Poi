@@ -1,3 +1,7 @@
 body{
     background-color: #eeeeee;
 }
+
+#contentWrap{
+    display: none;
+}
