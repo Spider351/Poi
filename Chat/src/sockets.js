@@ -71,6 +71,25 @@ module.exports = function(io){
                     cb("<b>Error</b>: falta mensaje o usuario");
                 }
             }
+            else if(mensaje.substr(0, 3) === "/c "){
+                mensaje = mensaje.substr(3);
+                var index = mensaje.indexOf(" ");
+                if(index !== -1){
+                    var user = mensaje.substr(0, index);
+                    var mensaje = mensaje.substr(index + 1);
+                    console.log("correo a", user);
+                    nicknames[socket.nickname].emit("correo", {
+                        msg : mensaje,
+                        nick : user
+                    });
+                }
+                else{
+                    cb("<b>Error</b>: falta mensaje o usuario");
+                }
+            }
+            else if(mensaje === "/zumbido"){
+                io.sockets.emit("zumbido", true);
+            }
             else{
                 var newMsg = new Chat({
                     nick: socket.nickname,

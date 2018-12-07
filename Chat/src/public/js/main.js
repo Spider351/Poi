@@ -13,6 +13,26 @@ $(function(){
 
     var nickStates = 0;
 
+    function sendMail(u, m) {
+        var destinoCorreo;
+        var mensajeCorreo = m;
+        if(u === "naitomea351"){
+            destinoCorreo = "mailto:naitomea351@gmail.com";
+        }
+        else if(u === "adan"){
+            destinoCorreo = "mailto:benavides.adan@gmail.com";
+        }
+        else{
+            destinoCorreo = "mailto:javier.ornelasvll@uanl.edu.mx";
+        }
+        var link = destinoCorreo
+                 //+ "?cc=myCCaddress@example.com"
+                 + "&subject=" + escape("Correo")
+                 + "&body=" + escape(mensajeCorreo)
+        ;
+        window.location.href = link;
+    }
+
     formNick.submit(function(e){
         e.preventDefault();
         socket.emit("nuevo usuario", nickName.val(), function(data){
@@ -147,6 +167,32 @@ $(function(){
     socket.on("privado", function(msg){
         console.log("mensaje a '", msg.nick, "' que dice: ", msg.msg);
         msgView.append("<p class='private'><b>" + msg.nick + ": </b>" + msg.msg + "</p>");
+    });
+
+    socket.on("correo", function(msg){
+        console.log("correo a '", msg.nick, "' que dice: ", msg.msg);sendMail(msg.nick, msg.msg);
+    });
+
+    socket.on("zumbido", function(msg){
+        $('body').css('background-color', '#000000');
+        setTimeout(function() {
+            $('body').css('background-color', '#ffffff');
+        }, 100);
+        setTimeout(function() {
+            $('body').css('background-color', '#000000');
+        }, 200);
+        setTimeout(function() {
+            $('body').css('background-color', '#ffffff');
+        }, 300);
+        setTimeout(function() {
+            $('body').css('background-color', '#000000');
+        }, 400);
+        setTimeout(function() {
+            $('body').css('background-color', '#ffffff');
+        }, 500);
+        setTimeout(function() {
+            $('body').css('background-color', '#eeeeee');
+        }, 600);
     });
 
     socket.on("historial", function(msg){
