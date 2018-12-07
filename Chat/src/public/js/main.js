@@ -27,7 +27,19 @@ $(function(){
 
     msgForm.submit(function(e){
         e.preventDefault();
-        socket.emit("enviar mensaje", msgContent.val(), function(data){
+        var mensajeCrypt = msgContent.val();
+        mensajeCrypt = mensajeCrypt.toString();
+        var msgLength = mensajeCrypt.length;
+        mensajeCrypt = 0;
+        console.log(msgLength);
+        for(var i = 0; i < msgLength; i++){
+			var a = msgContent.val().charCodeAt(i);
+			a = a + 10;
+			mensajeCrypt = mensajeCrypt + String.fromCharCode(a);
+        }
+        mensajeCrypt = mensajeCrypt.substr(1);
+        console.log(mensajeCrypt);
+        socket.emit("enviar mensaje", mensajeCrypt, function(data){
             msgView.append("<p class='error'>" + data + "</p>");
         });
         msgContent.val("");

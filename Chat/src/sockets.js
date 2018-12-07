@@ -19,7 +19,18 @@ module.exports = function(io){
         });
 
         socket.on("enviar mensaje", function(msg, cb){
-            var mensaje = msg.trim();
+            console.log(msg);
+
+            var mensajeDecrypt = msg;
+            var msgLength = mensajeDecrypt.length;
+            mensajeDecrypt = 0;
+            for(var i = 0; i < msgLength; i++){
+                var a = msg.charCodeAt(i);
+                a = a - 10;
+                mensajeDecrypt = mensajeDecrypt + String.fromCharCode(a);
+            }
+            mensajeDecrypt = mensajeDecrypt.substr(1);
+            var mensaje = mensajeDecrypt.trim();
             if(mensaje.substr(0, 3) === "/p "){
                 mensaje = mensaje.substr(3);
                 var index = mensaje.indexOf(" ");
@@ -47,7 +58,7 @@ module.exports = function(io){
             }
             else{
                 io.sockets.emit("recibir mensaje", {
-                    msg : msg,
+                    msg : mensajeDecrypt,
                     nick : socket.nickname
                 });
             }
