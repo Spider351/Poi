@@ -1,9 +1,14 @@
+const Chat = require("./models/chat");
+
 module.exports = function(io){
 
     let nicknames = [];
 
-    io.on("connection", function(socket){
+    io.on("connection", async function(socket){
         console.log("Usuario Conectado");
+
+        let mensajes = await Chat.find({});
+        socket.emit("historial", mensajes);
 
         socket.on("nuevo usuario", function(data, cb){
             console.log(data);
@@ -18,7 +23,7 @@ module.exports = function(io){
             }
         });
 
-        socket.on("enviar mensaje", function(msg, cb){
+        socket.on("enviar mensaje", async function(msg, cb){
             console.log(msg);
 
             var mensajeDecrypt = msg;
@@ -57,6 +62,12 @@ module.exports = function(io){
                 }
             }
             else{
+                var newMsg = new Chat({
+                    nick: socket.nickname,
+                    msg: mensajeDecrypt
+                });
+                await newMsg.save();
+
                 io.sockets.emit("recibir mensaje", {
                     msg : mensajeDecrypt,
                     nick : socket.nickname

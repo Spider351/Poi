@@ -63,5 +63,11 @@ $(function(){
         console.log("mensaje a '", msg.nick, "' que dice: ", msg.msg);
         msgView.append("<p class='private'><b>" + msg.nick + ": </b>" + msg.msg + "</p>");
     });
+
+    socket.on("historial", function(msg){
+        for(var i = 0; i < msg.length; i++){
+            msgView.append("<p class='global'><b>" + msg[i].nick + ": </b>" + msg[i].msg + "</p>");
+        }
+    });
 })
 
