@@ -1,8 +1,10 @@
 const Chat = require("./models/chat");
+const Users = require("./models/users");
 
 module.exports = function(io){
 
-    let nicknames = [];
+    let nicknames = {};
+    let nickState = [];
 
     io.on("connection", async function(socket){
         console.log("Usuario Conectado");
@@ -10,7 +12,7 @@ module.exports = function(io){
         let mensajes = await Chat.find({});
         socket.emit("historial", mensajes);
 
-        socket.on("nuevo usuario", function(data, cb){
+        socket.on("nuevo usuario", async function(data, cb){
             console.log(data);
             if(data in nicknames){
                 cb (false);
@@ -19,6 +21,14 @@ module.exports = function(io){
                 cb(true);
                 socket.nickname = data;
                 nicknames[socket.nickname] = socket;
+                if(nickState.indexOf(socket.nickname) != -1){
+                    nickState.splice(nickState.indexOf(socket.nickname), 1);
+                    io.sockets.emit("estados", nickState);
+                    console.log(nickState);
+                }
+                await Users.deleteOne({
+                    nick: socket.nickname
+                });
                 io.sockets.emit("usuarios", Object.keys(nicknames));
             }
         });
@@ -75,12 +85,19 @@ module.exports = function(io){
             }
         });
 
-        socket.on("disconnect", function(data){
+        socket.on("disconnect", async function(data){
             if(!socket.nickname){
                 return;
             }
             else{
+                nickState.push(socket.nickname);
+                var newUser = new Users({
+                    nick: socket.nickname
+                });
+                await newUser.save();
+                console.log(nickState);
                 delete nicknames[socket.nickname];
+                io.sockets.emit("estados", nickState);
                 io.sockets.emit("usuarios", Object.keys(nicknames));
             }
 

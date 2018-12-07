@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ChatSchema = new Schema({
-    nick:String,
+    nick: String,
     msg: String,
 })
 
