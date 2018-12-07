@@ -5,3 +5,15 @@ body{
 #contentWrap{
     display: none;
 }
+
+.private{
+    color: #6e6e6e;
+}
+
+.error{
+    color: #ff0000;
+}
+
+.global{
+    color: #000000;
+}

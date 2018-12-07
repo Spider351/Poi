@@ -14,7 +14,6 @@ $(function(){
     formNick.submit(function(e){
         e.preventDefault();
         socket.emit("nuevo usuario", nickName.val(), function(data){
-            console.log("agh");
             if(data){
                 $("#nickWrap").hide();
                 $("#contentWrap").show();
@@ -28,12 +27,14 @@ $(function(){
 
     msgForm.submit(function(e){
         e.preventDefault();
-        socket.emit("enviar mensaje", msgContent.val());
+        socket.emit("enviar mensaje", msgContent.val(), function(data){
+            msgView.append("<p class='error'>" + data + "</p>");
+        });
         msgContent.val("");
     });
 
     socket.on("recibir mensaje", function(msg){
-        msgView.append("<b>" + msg.nick + ": </b>" + msg.msg + "<br>");
+        msgView.append("<p class='global'><b>" + msg.nick + ": </b>" + msg.msg + "</p>");
     });
 
     socket.on("usuarios", function(msg){
@@ -45,4 +46,10 @@ $(function(){
         }
         usersList.html(html);
     });
+
+    socket.on("privado", function(msg){
+        console.log("mensaje a '", msg.nick, "' que dice: ", msg.msg);
+        msgView.append("<p class='private'><b>" + msg.nick + ": </b>" + msg.msg + "</p>");
+    });
 })
+
